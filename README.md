@@ -43,7 +43,7 @@ Full documentation is available at [scaffoldgen docs](https://tidjee-dev.github.
 - [Getting Started](https://tidjee-dev.github.io/scaffoldgen/docs/getting-started/installation)
 - [Format Guide](https://tidjee-dev.github.io/scaffoldgen/docs/guide/templating) (Markdown, YAML, JSON)
 - [Usage Examples](https://tidjee-dev.github.io/scaffoldgen/docs/examples/examples)
-- [CLI Reference](https://tidjee-dev.github.io/scaffoldgen/docs/guide/improvements)
+- [Templating System](https://tidjee-dev.github.io/scaffoldgen/docs/guide/templating)
 
 ## 🔒 Safety First
 
