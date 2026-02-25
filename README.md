@@ -114,7 +114,6 @@ scaffoldgen reverse --in ./lib --format yml
 | Flag        | Description                              |
 | ----------- | ---------------------------------------- |
 | `--in`      | Path to structure file                   |
-| `--in`      | Path to structure file (preview command) |
 | `--shell`   | `sh`, `ps1`, or `both`                   |
 | `--out`     | Output directory                         |
 | `--dry-run` | Print scripts without writing files      |
@@ -396,15 +395,6 @@ internal/
 - ✅ Template directives for explicit control
 - ✅ Ignore rules engine for excluding files/directories
 - ✅ Reverse mode (scan directory → generate structure file)
-
-### 🎯 Future Enhancements
-
-- Advanced glob pattern support for ignore rules
-- Custom file template providers
-- .gitignore integration
-- Parallel generation
-- Configuration file support (.scaffoldgenrc)
-- More language templates
 
 ## 📄 License
 
