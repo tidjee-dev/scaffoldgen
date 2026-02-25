@@ -1,4 +1,4 @@
-# scaffoldgen
+# `scaffoldgen`
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/tidjee-dev/scaffoldgen)](https://goreportcard.com/report/github.com/tidjee-dev/scaffoldgen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
