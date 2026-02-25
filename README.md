@@ -38,12 +38,12 @@ scaffoldgen reverse --in ./src --format md
 
 ## 📚 Documentation
 
-Full documentation is available at [scaffoldgen docs](https://scaffoldgen.dev):
+Full documentation is available at [scaffoldgen docs](https://tidjee-dev.github.io/scaffoldgen):
 
-- [Getting Started](https://scaffoldgen.dev/docs/getting-started/installation)
-- [Format Guide](https://scaffoldgen.dev/docs/guide/templating) (Markdown, YAML, JSON)
-- [Usage Examples](https://scaffoldgen.dev/docs/examples/examples)
-- [CLI Reference](https://scaffoldgen.dev/docs/guide/improvements)
+- [Getting Started](https://tidjee-dev.github.io/scaffoldgen/docs/getting-started/installation)
+- [Format Guide](https://tidjee-dev.github.io/scaffoldgen/docs/guide/templating) (Markdown, YAML, JSON)
+- [Usage Examples](https://tidjee-dev.github.io/scaffoldgen/docs/examples/examples)
+- [CLI Reference](https://tidjee-dev.github.io/scaffoldgen/docs/guide/improvements)
 
 ## 🔒 Safety First
 
