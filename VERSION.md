@@ -4,8 +4,8 @@ This project uses an automated version management system to keep version informa
 
 ## Files Managed
 
-- `version.json` - Master version configuration with build metadata
-- `internal/app/version.go` - Go version variable used by the CLI
+- `Makefile` - Contains the VERSION variable used for builds
+- `internal/app/version.go` - Go version variable used by the CLI (updated during build)
 
 ## Version Update Methods
 
@@ -25,7 +25,7 @@ go run scripts/update-version.go 1.2.3
 # Patch version (1.0.0 -> 1.0.1)
 make bump-patch
 
-# Minor version (1.0.0 -> 1.1.0)  
+# Minor version (1.0.0 -> 1.1.0)
 make bump-minor
 
 # Major version (1.0.0 -> 2.0.0)
@@ -35,26 +35,16 @@ make bump-major
 ### 3. Automatic Updates
 
 The version is automatically updated when:
+
 - Creating a Git tag with `v*` (via GitHub Actions)
 - Running release workflows
 
-## Version Information
+## Current Version
 
-The `version.json` file contains:
+The current version is defined in the Makefile:
 
-```json
-{
-  "version": "1.0.2",
-  "build": {
-    "date": "2026-03-17T11:51:56+01:00",
-    "commit": "7d8e8d8f0009e1509863ffb6b3f6a1d9d01d8209",
-    "dirty": true
-  },
-  "metadata": {
-    "go_version": "1.25.6",
-    "module": "github.com/tidjee-dev/scaffoldgen"
-  }
-}
+```makefile
+VERSION ?= 1.1.2
 ```
 
 ## Build Process
@@ -65,7 +55,7 @@ Always build after version updates:
 make build-with-version
 ```
 
-This ensures the binary contains the latest version information.
+This ensures the binary contains the latest version information by passing the version via ldflags to the Go binary.
 
 ## Release Process
 
@@ -81,6 +71,6 @@ This ensures the binary contains the latest version information.
 # Check current version
 ./scaffoldgen --version
 
-# Check version config
-cat version.json
+# Check Makefile version
+grep "VERSION" Makefile
 ```

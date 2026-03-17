@@ -53,13 +53,15 @@ func ValidateFilesystemConflicts(root *model.Node) error {
 		}
 
 		// Check for permission issues
-		if e.Kind == generator.EventFile {
+		switch e.Kind {
+		case generator.EventFile:
 			// Check if we can write to the file location
 			if info.Mode()&0200 == 0 { // No write permission for owner
 				conflicts = append(conflicts,
 					fmt.Sprintf("%s exists but lacks write permissions", e.Path))
 			}
-		} else if e.Kind == generator.EventDir {
+
+		case generator.EventDir:
 			// Check if we can create files in the directory
 			if info.Mode()&0300 == 0 { // No write/execute permission for owner
 				conflicts = append(conflicts,
