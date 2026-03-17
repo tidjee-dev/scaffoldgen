@@ -1,9 +1,9 @@
 {
-  "version": "1.0.2",
+  "version": "1.1.0",
   "build": {
-    "date": "2026-03-17T15:32:56+01:00",
-    "commit": "7d8e8d8f0009e1509863ffb6b3f6a1d9d01d8209",
-    "dirty": true
+    "date": "2026-03-17T15:56:44+01:00",
+    "commit": "c14b895829e22d591495aa3109994e5f6752dac9",
+    "dirty": false
   },
   "metadata": {
     "go_version": "1.25.6",
