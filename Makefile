@@ -3,13 +3,16 @@
 # Default target
 all: build
 
+# Version can be set here or passed as environment variable
+VERSION ?= 1.1.2
+
 # Build the application
 build:
-	go build -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(shell cat version.json | jq -r .version)" -o scaffoldgen ./cmd/scaffoldgen
+	go build -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(VERSION)" -o scaffoldgen ./cmd/scaffoldgen
 
-# Install with build info
+# Install with version
 install:
-	go install -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(shell cat version.json | jq -r .version)" ./cmd/scaffoldgen
+	go install -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(VERSION)" ./cmd/scaffoldgen
 
 # Run tests
 test:
