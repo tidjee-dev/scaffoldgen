@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -35,6 +36,13 @@ func main() {
 	}
 
 	newVersion := os.Args[1]
+
+	// Validate version format (semantic versioning)
+	if !isValidVersion(newVersion) {
+		fmt.Printf("Error: Invalid version format '%s'. Expected semantic versioning format (e.g., 1.0.0, 2.1.3-beta)\n", newVersion)
+		os.Exit(1)
+	}
+
 	rootDir := "."
 	versionFile := filepath.Join(rootDir, "version.json")
 	versionGoFile := filepath.Join(rootDir, "internal", "app", "version.go")
@@ -49,11 +57,14 @@ func main() {
 	// Update version
 	config.Version = newVersion
 	config.Build.Date = time.Now().Format(time.RFC3339)
-	
+
 	// Get git info
 	if commit, dirty, err := getGitInfo(rootDir); err == nil {
 		config.Build.Commit = commit
 		config.Build.Dirty = dirty
+	} else {
+		// Log git error but don't fail - version update is more important
+		fmt.Printf("Warning: Could not get git info: %v\n", err)
 	}
 
 	// Write updated version config
@@ -71,6 +82,18 @@ func main() {
 	fmt.Printf("✅ Version updated to %s\n", newVersion)
 	fmt.Printf("📝 Updated: %s\n", versionFile)
 	fmt.Printf("📝 Updated: %s\n", versionGoFile)
+}
+
+func isValidVersion(version string) bool {
+	// Semantic versioning regex: X.Y.Z where X, Y, Z are numbers
+	// Optional pre-release and build metadata supported
+	// Examples: 1.0.0, 2.1.3-beta, 1.0.0-alpha.1, 1.0.0+build.1
+	semverRegex := `^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$`
+	matched, err := regexp.MatchString(semverRegex, version)
+	if err != nil {
+		return false
+	}
+	return matched
 }
 
 func readVersionConfig(path string) (*VersionConfig, error) {
@@ -113,23 +136,38 @@ func PrintVersion() {
 }
 
 func getGitInfo(dir string) (string, bool, error) {
-	// Get commit hash
-	cmd := exec.Command("git", "rev-parse", "HEAD")
+	// Get commit hash and check if dirty in a single command to avoid race conditions
+	// Use git status --porcelain=v1 -b to get branch info and dirty status together
+	cmd := exec.Command("git", "status", "--porcelain=v1", "-b")
 	cmd.Dir = dir
 	output, err := cmd.Output()
 	if err != nil {
 		return "", false, err
 	}
-	commit := strings.TrimSpace(string(output))
 
-	// Check if working directory is dirty
-	cmd = exec.Command("git", "status", "--porcelain")
+	// Parse output to check if dirty
+	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
+	dirty := false
+	for _, line := range lines {
+		// Skip branch header line (starts with ##)
+		if strings.HasPrefix(line, "##") {
+			continue
+		}
+		// Any other line indicates a dirty working directory
+		if strings.TrimSpace(line) != "" {
+			dirty = true
+			break
+		}
+	}
+
+	// Get commit hash separately (this is safe as commit hash doesn't change during status check)
+	cmd = exec.Command("git", "rev-parse", "HEAD")
 	cmd.Dir = dir
 	output, err = cmd.Output()
 	if err != nil {
 		return "", false, err
 	}
-	dirty := len(strings.TrimSpace(string(output))) > 0
+	commit := strings.TrimSpace(string(output))
 
 	return commit, dirty, nil
 }

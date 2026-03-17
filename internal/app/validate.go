@@ -8,7 +8,6 @@ import (
 
 	"github.com/tidjee-dev/scaffoldgen/internal/generator"
 	"github.com/tidjee-dev/scaffoldgen/internal/model"
-
 )
 
 func ValidateFilesystemConflicts(root *model.Node) error {
@@ -26,6 +25,7 @@ func ValidateFilesystemConflicts(root *model.Node) error {
 			return
 		}
 
+		// Check for file/directory type conflicts
 		switch e.Kind {
 		case generator.EventDir:
 			if !info.IsDir() {
@@ -39,19 +39,44 @@ func ValidateFilesystemConflicts(root *model.Node) error {
 					fmt.Sprintf("%s exists as DIRECTORY but expected FILE", e.Path))
 			}
 		}
+
+		// Check for symlink conflicts
+		if info.Mode()&os.ModeSymlink != 0 {
+			target, err := os.Readlink(path)
+			if err != nil {
+				conflicts = append(conflicts,
+					fmt.Sprintf("%s is a broken symlink: %v", e.Path, err))
+			} else {
+				conflicts = append(conflicts,
+					fmt.Sprintf("%s is a symlink pointing to: %s", e.Path, target))
+			}
+		}
+
+		// Check for permission issues
+		if e.Kind == generator.EventFile {
+			// Check if we can write to the file location
+			if info.Mode()&0200 == 0 { // No write permission for owner
+				conflicts = append(conflicts,
+					fmt.Sprintf("%s exists but lacks write permissions", e.Path))
+			}
+		} else if e.Kind == generator.EventDir {
+			// Check if we can create files in the directory
+			if info.Mode()&0300 == 0 { // No write/execute permission for owner
+				conflicts = append(conflicts,
+					fmt.Sprintf("%s exists but lacks write/execute permissions", e.Path))
+			}
+		}
 	})
 
 	if len(conflicts) == 0 {
 		return nil
 	}
 
-	var b strings.Builder
-
-	for _, c := range conflicts {
-		b.WriteString(" - ")
-		b.WriteString(c)
-		b.WriteByte('\n')
+	// Optimize string building with strings.Join
+	conflictLines := make([]string, len(conflicts))
+	for i, c := range conflicts {
+		conflictLines[i] = " - " + c
 	}
 
-	return fmt.Errorf("%s", b.String())
+	return fmt.Errorf("%s", strings.Join(conflictLines, "\n"))
 }

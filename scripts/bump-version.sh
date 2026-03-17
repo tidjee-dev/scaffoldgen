@@ -14,11 +14,22 @@ if [ "$CURRENT_VERSION" = "null" ]; then
     exit 1
 fi
 
-# Parse version parts
+# Parse version parts with validation
+if [[ ! "$CURRENT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "Error: Invalid version format '$CURRENT_VERSION'. Expected semantic versioning format (e.g., 1.0.0)"
+    exit 1
+fi
+
 IFS='.' read -ra PARTS <<< "$CURRENT_VERSION"
 MAJOR=${PARTS[0]}
 MINOR=${PARTS[1]}
 PATCH=${PARTS[2]}
+
+# Validate that all parts are numeric
+if ! [[ "$MAJOR" =~ ^[0-9]+$ ]] || ! [[ "$MINOR" =~ ^[0-9]+$ ]] || ! [[ "$PATCH" =~ ^[0-9]+$ ]]; then
+    echo "Error: Version parts must be numeric"
+    exit 1
+fi
 
 # Determine bump type
 BUMP_TYPE=${1:-patch}

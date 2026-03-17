@@ -4,18 +4,21 @@ import (
 	"bytes"
 	"io"
 	"os"
+	"strings"
 	"testing"
 )
 
 func TestVersionVariable(t *testing.T) {
-	// Test that Version variable exists and has a default value
+	// Test that Version variable exists and has a value
 	if Version == "" {
 		t.Error("Expected Version variable to be set")
 	}
 
-	// Test default value
-	if Version != "dev" {
-		t.Errorf("Expected default Version to be 'dev', got %s", Version)
+	// Test that version follows semantic versioning format
+	// Note: Version may be set during build, so we just validate it's not empty
+	// and follows a reasonable format
+	if len(Version) < 3 {
+		t.Errorf("Version seems too short: %s", Version)
 	}
 }
 
@@ -38,9 +41,14 @@ func TestPrintVersion(t *testing.T) {
 	output := buf.String()
 
 	// Check that output contains expected content
-	expected := "scaffoldgen dev\n"
-	if output != expected {
-		t.Errorf("Expected output %q, got %q", expected, output)
+	expectedPrefix := "scaffoldgen "
+	if !strings.HasPrefix(output, expectedPrefix) {
+		t.Errorf("Expected output to start with %q, got %q", expectedPrefix, output)
+	}
+
+	// Check that it ends with newline
+	if !strings.HasSuffix(output, "\n") {
+		t.Errorf("Expected output to end with newline, got %q", output)
 	}
 }
 

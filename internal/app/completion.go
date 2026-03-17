@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -60,8 +61,10 @@ PowerShell:
 			return cmd.Root().GenFishCompletion(os.Stdout, true)
 		case "powershell":
 			return cmd.Root().GenPowerShellCompletionWithDesc(os.Stdout)
+		default:
+			// This should never happen due to cobra.ExactValidArgs(1) and ValidArgs
+			return fmt.Errorf("unsupported shell: %s", args[0])
 		}
-		return nil
 	},
 }
 
