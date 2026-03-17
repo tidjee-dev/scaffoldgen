@@ -15,31 +15,20 @@ func TestVersionCmd(t *testing.T) {
 		t.Errorf("Expected short description 'Show version information', got %s", versionCmd.Short)
 	}
 
-	// Test that command has verbose flag
+	// Test that command doesn't have verbose flag (we removed it)
 	flag := versionCmd.Flags().Lookup("verbose")
-	if flag == nil {
-		t.Error("Expected 'verbose' flag to be present")
+	if flag != nil {
+		t.Error("Expected 'verbose' flag to be removed")
 	}
-
-	// Test short flag - just check that the flag was set up correctly
-	// The actual flag testing is complex due to cobra internals, so we'll skip detailed testing
-	_ = versionCmd.Flags().Lookup("verbose") // This should not panic
 }
 
 func TestVersionCmdExecution(t *testing.T) {
 	tests := []struct {
 		name       string
-		verbose    bool
 		wantOutput string
 	}{
 		{
 			name:       "basic version",
-			verbose:    false,
-			wantOutput: "scaffoldgen dev",
-		},
-		{
-			name:       "verbose version",
-			verbose:    true,
 			wantOutput: "scaffoldgen dev",
 		},
 	}
@@ -49,13 +38,8 @@ func TestVersionCmdExecution(t *testing.T) {
 			// Test the version logic directly
 			var buf bytes.Buffer
 
-			if tt.verbose {
-				// Simulate verbose output
-				buf.WriteString("scaffoldgen dev\n\nBuild Information:\n  Commit: abc12345\n  Built:  2026-03-17 12:00:00\n\nRuntime:\n  Go:     1.25.6\n  Module: github.com/tidjee-dev/scaffoldgen\n")
-			} else {
-				// Simulate basic output
-				buf.WriteString("scaffoldgen dev\n")
-			}
+			// Simulate basic output
+			buf.WriteString("scaffoldgen dev\n")
 
 			output := buf.String()
 			if !containsString(output, tt.wantOutput) {

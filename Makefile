@@ -1,11 +1,15 @@
-.PHONY: build test clean version bump-patch bump-minor bump-major
+.PHONY: build install test clean version bump-patch bump-minor bump-major
 
 # Default target
 all: build
 
 # Build the application
 build:
-	go build -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(shell cat version.json | jq -r .version) -X github.com/tidjee-dev/scaffoldgen/internal/app.BuildDate=$(shell cat version.json | jq -r .build.date) -X github.com/tidjee-dev/scaffoldgen/internal/app.BuildCommit=$(shell cat version.json | jq -r .build.commit) -X github.com/tidjee-dev/scaffoldgen/internal/app.GoVersion=$(shell cat version.json | jq -r .metadata.go_version)" -o scaffoldgen ./cmd/scaffoldgen
+	go build -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(shell cat version.json | jq -r .version)" -o scaffoldgen ./cmd/scaffoldgen
+
+# Install with build info
+install:
+	go install -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(shell cat version.json | jq -r .version)" ./cmd/scaffoldgen
 
 # Run tests
 test:

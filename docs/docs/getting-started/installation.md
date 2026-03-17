@@ -9,18 +9,11 @@ Scaffoldgen is a lightweight Go CLI that generates safe, reviewable scaffold scr
 
 ### **Option 1: Go Install (Recommended)**
 
-The easiest and most idiomatic way to install scaffoldgen:
-
 ```bash
 go install github.com/tidjee-dev/scaffoldgen/cmd/scaffoldgen@latest
 ```
 
-**Why this is recommended:**
-
-- ✅ Single command installation
-- ✅ Always gets the latest version
-- ✅ Standard Go ecosystem practice
-- ✅ Automatic updates with `go install ...@latest`
+The standard Go way. Works for anyone with Go installed.
 
 ### **Option 2: Download Binary (No Go required)**
 

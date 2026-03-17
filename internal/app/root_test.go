@@ -74,14 +74,6 @@ func TestExecute(t *testing.T) {
 	}
 }
 
-func TestShowVersionFlag(t *testing.T) {
-	// Test that showVersion variable exists
-	// This is a basic test to ensure the variable is declared
-	if showVersion != false {
-		t.Errorf("Expected showVersion to default to false, got %v", showVersion)
-	}
-}
-
 func TestCobraOnInitialize(t *testing.T) {
 	// Test that cobra.OnInitialize is called
 	// This is a basic test to ensure initialization is set up

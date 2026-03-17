@@ -25,9 +25,7 @@ Instead of directly modifying your filesystem, scaffoldgen generates shell scrip
 go install github.com/tidjee-dev/scaffoldgen/cmd/scaffoldgen@latest
 ```
 
-**Auto-updates**: Scaffoldgen automatically checks for updates every 24 hours and will notify you when a new version is available.
-
-**Manual update**: Run `scaffoldgen update` to update to the latest version.
+The standard Go way. Works for anyone with Go installed.
 
 ### **Option 2: Download Binary (No Go required)**
 
@@ -69,6 +67,9 @@ scaffoldgen preview --in structure.yml
 
 # Scan an existing directory
 scaffoldgen reverse --in ./src --format md
+
+# Show version information
+scaffoldgen version
 
 # Update to the latest version
 scaffoldgen update
