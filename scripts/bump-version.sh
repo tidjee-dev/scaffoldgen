@@ -2,15 +2,15 @@
 
 set -e
 
-# Get current version
-if [ ! -f "version.json" ]; then
-    echo "Error: version.json not found"
+# Get current version from Makefile
+if [ ! -f "Makefile" ]; then
+    echo "Error: Makefile not found"
     exit 1
 fi
 
-CURRENT_VERSION=$(jq -r '.version' version.json)
-if [ "$CURRENT_VERSION" = "null" ]; then
-    echo "Error: Could not read version from version.json"
+CURRENT_VERSION=$(grep "^VERSION ?=" Makefile | sed 's/VERSION ?= //')
+if [ -z "$CURRENT_VERSION" ]; then
+    echo "Error: Could not read version from Makefile"
     exit 1
 fi
 
@@ -62,7 +62,7 @@ go run scripts/update-version.go "$NEW_VERSION"
 
 # Git commit and tag
 echo "Creating git commit and tag..."
-git add version.json internal/app/version.go
+git add Makefile
 git commit -m "chore: bump version to $NEW_VERSION"
 git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION"
 
