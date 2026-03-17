@@ -19,8 +19,39 @@ Instead of directly modifying your filesystem, scaffoldgen generates shell scrip
 
 ## 📦 Installation
 
+### **Option 1: Go Install (Recommended)**
+
 ```bash
 go install github.com/tidjee-dev/scaffoldgen/cmd/scaffoldgen@latest
+```
+
+### **Option 2: Download Binary (No Go required)**
+
+Download from [GitHub Releases](https://github.com/tidjee-dev/scaffoldgen/releases/latest):
+
+```bash
+# macOS
+curl -L -o scaffoldgen https://github.com/tidjee-dev/scaffoldgen/releases/latest/download/scaffoldgen-darwin-arm64
+chmod +x scaffoldgen
+./scaffoldgen --version
+
+# Linux
+curl -L -o scaffoldgen https://github.com/tidjee-dev/scaffoldgen/releases/latest/download/scaffoldgen-linux-amd64
+chmod +x scaffoldgen
+./scaffoldgen --version
+
+# Windows
+curl -L -o scaffoldgen.exe https://github.com/tidjee-dev/scaffoldgen/releases/latest/download/scaffoldgen-windows-amd64.exe
+./scaffoldgen.exe --version
+```
+
+### **Option 3: Build from Source**
+
+```bash
+git clone https://github.com/tidjee-dev/scaffoldgen.git
+cd scaffoldgen
+make build
+./scaffoldgen --version
 ```
 
 ## 🚀 Quick Start
