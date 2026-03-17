@@ -75,7 +75,7 @@ func runUpdate(cmd *cobra.Command, args []string) error {
 
 	fmt.Println(tui.Success("✅ Update completed successfully!"))
 	fmt.Printf("Updated from %s to %s\n", Version, latest.TagName)
-	fmt.Println(tui.Info("💡 Please restart scaffoldgen to use the new version"))
+	fmt.Println(tui.Info("💡 Start a new terminal session to use the updated version"))
 
 	return nil
 }
