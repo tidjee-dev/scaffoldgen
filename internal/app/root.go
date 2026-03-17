@@ -12,6 +12,10 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		_ = cmd.Help()
 	},
+	PersistentPostRun: func(cmd *cobra.Command, args []string) {
+		// Check for updates in the background (non-blocking)
+		go checkForUpdates()
+	},
 }
 
 var showVersion bool
@@ -26,6 +30,7 @@ func init() {
 			PrintVersion()
 			os.Exit(0)
 		}
+		checkForUpdates()
 	})
 }
 
