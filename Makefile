@@ -14,7 +14,6 @@ test:
 # Clean build artifacts
 clean:
 	rm -f scaffoldgen
-	rm -f version.json
 
 # Update version (requires version argument)
 version:
