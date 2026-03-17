@@ -63,12 +63,31 @@ scaffoldgen preview --in structure.yml
 scaffoldgen generate --in structure.yml --shell both
 ```
 
-### 4️⃣ Review & Execute
+### 4️⃣ Review
 
 ```bash
 cat scaffold.sh  # Review the script
-./scaffold.sh    # Run it
 ```
+
+### 5️⃣ Execute
+
+```bash
+./scaffold.sh  # Run the script
+```
+
+### 6️⃣ Other tools
+
+- `validate` - Validate structure files
+
+  ```bash
+  scaffoldgen validate --in structure.yml
+  ```
+
+- `reverse` - Generate structure files from existing directories
+
+  ```bash
+  scaffoldgen reverse --in ./my-project --out structure.yml
+  ```
 
 ## Living Documentation
 
