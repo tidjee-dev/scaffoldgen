@@ -32,6 +32,16 @@ func init() {
 		"version.json",
 		filepath.Join("..", "version.json"),
 		filepath.Join("..", "..", "version.json"),
+		filepath.Join("..", "..", "..", "version.json"),
+	}
+
+	// Also try to find it relative to the executable path
+	if exePath, err := os.Executable(); err == nil {
+		exeDir := filepath.Dir(exePath)
+		possiblePaths = append(possiblePaths,
+			filepath.Join(exeDir, "version.json"),
+			filepath.Join(filepath.Dir(exeDir), "version.json"),
+		)
 	}
 
 	for _, path := range possiblePaths {
@@ -61,8 +71,9 @@ func showDetailedVersion() error {
 	// Try to read version.json for additional info
 	data, err := os.ReadFile(versionFile)
 	if err != nil {
-		// Version file is optional - log warning but don't fail
+		// Version file is optional - provide helpful message
 		fmt.Fprintf(os.Stderr, "Warning: Could not read version file %s: %v\n", versionFile, err)
+		fmt.Fprintf(os.Stderr, "Note: Run scaffoldgen from the project directory for full build information\n")
 		return nil
 	}
 
