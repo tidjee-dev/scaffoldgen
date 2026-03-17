@@ -5,6 +5,30 @@ sidebar_position: 2
 
 Get up and running with scaffoldgen in 5 minutes.
 
+## 📦 Installation
+
+### **Option 1: Go Install (Recommended)**
+
+The easiest way to install scaffoldgen is with `go install`:
+
+```bash
+go install github.com/tidjee-dev/scaffoldgen/cmd/scaffoldgen@latest
+```
+
+This installs the latest version and keeps it updated automatically.
+
+### **Option 2: Download Binary**
+
+If you don't have Go installed, download pre-compiled binaries from [GitHub Releases](https://github.com/tidjee-dev/scaffoldgen/releases/latest).
+
+### **Option 3: Build from Source**
+
+```bash
+git clone https://github.com/tidjee-dev/scaffoldgen.git
+cd scaffoldgen
+make build
+```
+
 ## 1. Create a Structure File
 
 Create `structure.md` with your project structure:

@@ -31,6 +31,9 @@ Thank you for your interest in contributing to ScaffoldGen! This document provid
    make build
    # or directly
    go build -o scaffoldgen ./cmd/scaffoldgen
+
+   # For development, you can also install locally:
+   go install ./cmd/scaffoldgen
    ```
 
 4. **Run tests**
