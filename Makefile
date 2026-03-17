@@ -5,7 +5,7 @@ all: build
 
 # Build the application
 build:
-	go build -o scaffoldgen ./cmd/scaffoldgen
+	go build -ldflags="-X github.com/tidjee-dev/scaffoldgen/internal/app.Version=$(shell cat version.json | jq -r .version) -X github.com/tidjee-dev/scaffoldgen/internal/app.BuildDate=$(shell cat version.json | jq -r .build.date) -X github.com/tidjee-dev/scaffoldgen/internal/app.BuildCommit=$(shell cat version.json | jq -r .build.commit) -X github.com/tidjee-dev/scaffoldgen/internal/app.GoVersion=$(shell cat version.json | jq -r .metadata.go_version)" -o scaffoldgen ./cmd/scaffoldgen
 
 # Run tests
 test:
@@ -28,7 +28,7 @@ version:
 bump-patch:
 	@./scripts/bump-version.sh patch
 
-# Bump minor version (1.0.0 -> 1.1.0)  
+# Bump minor version (1.0.0 -> 1.1.0)
 bump-minor:
 	@./scripts/bump-version.sh minor
 
