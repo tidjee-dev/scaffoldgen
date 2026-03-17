@@ -80,7 +80,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} - tidjee-dev | scaffoldgen. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} - tidjee-dev | scaffoldgen.`,
     },
     prism: {
       theme: prismThemes.github,
