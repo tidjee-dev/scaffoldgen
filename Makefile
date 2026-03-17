@@ -4,7 +4,7 @@
 all: build
 
 # Version can be set here or passed as environment variable
-VERSION ?= 1.1.2
+VERSION ?= 1.1.3
 
 # Build the application
 build:
