@@ -5,7 +5,7 @@ import (
 )
 
 // Version is set during build using ldflags, defaults to current release
-var Version = "1.1.3"
+var Version = "1.1.4"
 
 func PrintVersion() {
 	fmt.Printf("scaffoldgen %s\n", Version)
